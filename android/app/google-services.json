@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1040079556050",
+    "project_id": "hotel-wave",
+    "storage_bucket": "hotel-wave.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040079556050:android:f6c78defdbf28fbe944c0b",
+        "android_client_info": {
+          "package_name": "com.example.hotel_wave"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB00C39XUUolIrZTcuG2kgb4iikcf26nVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
