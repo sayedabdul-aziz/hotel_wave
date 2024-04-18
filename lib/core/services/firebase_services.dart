@@ -15,23 +15,23 @@ class FirebaseServices {
     _db = FirebaseFirestore.instance;
     _storage =
         FirebaseStorage.instanceFor(bucket: 'gs://hotel-wave.appspot.com');
-    _getUser();
   }
 
   static logout() {
     _auth.signOut();
   }
 
-  static Future<void> _getUser() async {
-    user = _auth.currentUser;
+  static User getUser() {
+    return _auth.currentUser!;
   }
 
   static addToFav({
     required HotelModel model,
+    required User user,
   }) async {
     await FirebaseFirestore.instance
         .collection('favourite-list')
-        .doc(user?.uid)
+        .doc(user.uid)
         .set({
       model.id ?? '': model.toJson(),
     }, SetOptions(merge: true));

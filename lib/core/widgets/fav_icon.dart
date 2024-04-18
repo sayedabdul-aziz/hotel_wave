@@ -14,7 +14,9 @@ class FavouriteIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        FirebaseServices.addToFav(model: model).then((value) {
+        FirebaseServices.addToFav(
+                model: model, user: FirebaseServices.getUser())
+            .then((value) {
           showErrorDialog(
               context, 'Added To Favourite', AppColors.bottomBarColor);
         });

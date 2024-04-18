@@ -31,13 +31,11 @@ class _ProfileViewState extends State<ProfileView> {
   List labelName = [
     'First Name',
     'Last Name',
-    'Username',
   ];
 
   List value = [
     "fname",
     "lname",
-    "username",
   ];
 
   String? _imagePath;
@@ -212,12 +210,13 @@ class _ProfileViewState extends State<ProfileView> {
                                 overflow: TextOverflow.ellipsis,
                                 style: getTitleStyle(),
                               ),
-                              Text(
-                                "@${userData['username']}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: getsmallStyle(),
-                              ),
+
+                              // Text(
+                              //   "@${userData['username']}",
+                              //   maxLines: 2,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   style: getsmallStyle(),
+                              // ),
                             ],
                           ),
                         ),
@@ -230,7 +229,7 @@ class _ProfileViewState extends State<ProfileView> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: AppColors.accentColor,
+                        color: AppColors.shadeColor,
                       ),
                       child: Column(
                         children: [
@@ -289,15 +288,9 @@ class _ProfileViewState extends State<ProfileView> {
                         (index) => Container(
                           margin: const EdgeInsets.only(bottom: 15),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xffFFE2BD),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: AppColors.white.withOpacity(.2),
-                                    spreadRadius: 0,
-                                    offset: const Offset(5, 2),
-                                    blurRadius: 8)
-                              ]),
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.shadeColor,
+                          ),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 14, vertical: 5),
                           width: MediaQuery.of(context).size.width,
@@ -325,7 +318,7 @@ class _ProfileViewState extends State<ProfileView> {
                                         var form = GlobalKey<FormState>();
                                         return SimpleDialog(
                                           backgroundColor:
-                                              AppColors.accentColor,
+                                              AppColors.darkScaffoldbg,
                                           alignment: Alignment.center,
                                           contentPadding:
                                               const EdgeInsets.all(10),
@@ -393,54 +386,12 @@ class _ProfileViewState extends State<ProfileView> {
                       color: AppColors.primary,
                     ),
                     const Gap(10),
-                    if (userData['role'] == 'Customer')
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 15),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: const Color(0xffFFE2BD),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: AppColors.white.withOpacity(.2),
-                                  spreadRadius: 0,
-                                  offset: const Offset(5, 2),
-                                  blurRadius: 10)
-                            ]),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 5),
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Donation',
-                              style: getTitleStyle(
-                                  color: AppColors.primary,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.attach_money_rounded,
-                                  color: AppColors.primary,
-                                ))
-                          ],
-                        ),
-                      ),
-                    const Gap(10),
                     Container(
                       margin: const EdgeInsets.only(bottom: 15),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color(0xffFFE2BD),
-                          boxShadow: [
-                            BoxShadow(
-                                color: AppColors.white.withOpacity(.2),
-                                spreadRadius: 0,
-                                offset: const Offset(5, 2),
-                                blurRadius: 10)
-                          ]),
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.shadeColor,
+                      ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 14, vertical: 5),
                       width: MediaQuery.of(context).size.width,

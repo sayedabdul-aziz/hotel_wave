@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_wave/core/utils/app_text_styles.dart';
 import 'package:hotel_wave/core/utils/colors.dart';
 import 'package:hotel_wave/core/widgets/custom_button.dart';
-import 'package:intl/intl.dart';
+import 'package:hotel_wave/features/traveler/home/widgets/resturent_item.dart';
 
 class CustomerCartView extends StatefulWidget {
   const CustomerCartView({super.key});
@@ -30,7 +29,6 @@ class _CustomerCartViewState extends State<CustomerCartView> {
     _getUser();
   }
 
-  double totalSalary = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,192 +37,148 @@ class _CustomerCartViewState extends State<CustomerCartView> {
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
-              .collection('cart-list')
-              .doc(user?.uid)
+              .collection('hotel-booking')
+              .where('userId', isEqualTo: user!.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (snapshot.data?.data() == null ||
-                snapshot.data!.data()?['total'] == 0) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.shopping_cart_checkout_rounded,
-                      size: 150,
-                      color: AppColors.accentColor,
-                    ),
-                    const Gap(20),
-                    Text(
-                      'No Items in your cart\nOpen Menu and add to your cart',
-                      textAlign: TextAlign.center,
-                      style: getbodyStyle(
-                        fontSize: 16,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              double allTotal = snapshot.data!.data()!['total'];
-              List<String> keyy = snapshot.data!
-                  .data()!
-                  .keys
-                  .where((e) => e != 'total')
-                  .toList();
+            }
+            //  else if (snapshot.data!) {
+            //   return Center(
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Icon(
+            //           Icons.favorite_outlined,
+            //           size: 150,
+            //           color: AppColors.shadeColor,
+            //         ),
+            //         const Gap(20),
+            //         Text(
+            //           'No Items in your favourite\nExplore and add to your favourite',
+            //           textAlign: TextAlign.center,
+            //           style: getbodyStyle(
+            //             fontSize: 16,
+            //             color: AppColors.white,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   );
+            // }
+            else {
               return Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Flexible(
-                        child: ListView.separated(
-                          itemCount: snapshot.data!.data()!.length - 1,
-                          itemBuilder: (context, index) {
-                            Map<String, dynamic> item =
-                                snapshot.data!.data()![keyy[index]];
-
-                            return Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(50),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                child: ListView.separated(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var item = snapshot.data!.docs[index].data();
+                    return GestureDetector(
+                        onTap: () {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => CustomerFoodDetailsView(
+                          //       id: item[keyy[index]]['name']),
+                          // ));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(15),
                               ),
-                              child: Row(
+                              color: AppColors.bottomBarColor,
+                              border: Border.all(color: AppColors.shadeColor)),
+                          child: Column(
+                            children: [
+                              ResturentItem(
+                                imageUrl: item['hotel']['cover'],
+                                name: item['hotel']['name'],
+                                price: item['totalPrice'].toString(),
+                                rating: (item['hotel']['rating']).toString(),
+                              ),
+                              const Gap(10),
+                              Row(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 50,
-                                    backgroundColor: AppColors.white,
-                                    backgroundImage:
-                                        NetworkImage(item['p_image']),
+                                  Text(
+                                    'Check In: ',
+                                    style:
+                                        getTitleStyle(color: AppColors.primary),
                                   ),
-                                  const Gap(10),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(item['p_name'],
-                                            style: getTitleStyle().copyWith(
-                                              fontSize: 16,
-                                              color: AppColors.white,
-                                              fontFamily:
-                                                  GoogleFonts.lato().fontFamily,
-                                            )),
-                                        Text('x ${item['quantity']}',
-                                            style: getTitleStyle().copyWith(
-                                              fontSize: 14,
-                                              fontFamily:
-                                                  GoogleFonts.lato().fontFamily,
-                                            )),
-                                      ],
-                                    ),
+                                  Text(
+                                    item['checkIn'].toString().split(' ')[0],
+                                    style: getbodyStyle(),
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteItemFromCart(keyy[index],
-                                                item['total'], allTotal);
-                                          },
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: AppColors.redColor,
-                                          )),
-                                      Text('EGP ${item['total']}',
-                                          style: getTitleStyle().copyWith(
-                                            fontSize: 14,
-                                            color: AppColors.white,
-                                            fontFamily:
-                                                GoogleFonts.lato().fontFamily,
-                                          )),
-                                    ],
-                                  ),
-                                  const Gap(20)
                                 ],
                               ),
-                            );
-                          },
-                          separatorBuilder: (context, index) => const Gap(15),
-                        ),
-                      ),
-                      const Gap(10),
-                      Row(
-                        children: [
-                          const Text('Total : '),
-                          Text('EGP ${allTotal.toString()}',
-                              style: getTitleStyle()),
-                          const Spacer(),
-                          CustomButton(
-                            text: 'Checkout',
-                            width: 150,
-                            radius: 20,
-                            onTap: () {
-                              String date =
-                                  DateFormat.MMMMd().format(DateTime.now());
-                              String time = DateFormat('hh:mm:ss a')
-                                  .format(DateTime.now());
-                              checkoutTheOrder(
-                                  date: date,
-                                  time: time,
-                                  customerId: user!.uid);
-                            },
+                              const Gap(5),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Check Out: ',
+                                    style:
+                                        getTitleStyle(color: AppColors.primary),
+                                  ),
+                                  Text(
+                                    item['checkOut'].toString().split(' ')[0],
+                                    style: getbodyStyle(),
+                                  ),
+                                ],
+                              ),
+                              const Gap(5),
+                              Row(
+                                children: [
+                                  Text(
+                                    'No. of gests: ',
+                                    style:
+                                        getTitleStyle(color: AppColors.primary),
+                                  ),
+                                  Text(
+                                    ' ${item['numberOfGuests'].toString()}',
+                                    style: const TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              ),
+                              const Gap(15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomButton(
+                                      onTap: () {
+                                        cancelRoom(
+                                            snapshot.data!.docs[index].id);
+                                      },
+                                      height: 40,
+                                      color: AppColors.redColor,
+                                      text: 'Cancel Room',
+                                    ),
+                                  ),
+                                  const Gap(20),
+                                  Text(
+                                    ' ${item['totalPrice'].toString()} \$',
+                                    style: const TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
-                        ],
-                      )
-                    ],
-                  ));
+                        ));
+                  },
+                  separatorBuilder: (context, index) => const Gap(15),
+                ),
+              );
             }
           }),
     );
   }
 
-  deleteItemFromCart(item, itemTotal, total) {
-    FirebaseFirestore.instance.collection('cart-list').doc(user?.uid).set({
-      item: FieldValue.delete(),
-      'total': total - itemTotal,
-    }, SetOptions(merge: true));
-  }
-
-  checkoutTheOrder({
-    required String date,
-    required String time,
-    required String customerId,
-  }) async {
-    DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection('cart-list')
-        .doc(user?.uid)
-        .get();
-
-    Map<String, dynamic> productData = doc.data() as Map<String, dynamic>;
-    List<String> keyy = productData.keys.where((e) => e != 'total').toList();
-    for (int i = 0; i < keyy.length; i++) {
-      FirebaseFirestore.instance
-          .collection('order-list')
-          .doc(customerId + time)
-          .set({
-        keyy[i]: productData[keyy[i]],
-      }, SetOptions(merge: true));
-    }
+  cancelRoom(id) {
     FirebaseFirestore.instance
-        .collection('order-list')
-        .doc(customerId + time)
-        .set({
-      'total': productData['total'],
-      'customerId': customerId,
-      'date': date,
-      'time': time,
-      'datetime': DateTime.now(),
-      'delivered': false,
-    }, SetOptions(merge: true));
-    FirebaseFirestore.instance.collection('cart-list').doc(user?.uid).delete();
+        .collection('hotel-booking')
+        .doc(id)
+        .set({'status': 2}, SetOptions(merge: true));
   }
 }

@@ -44,7 +44,7 @@ class _CustomerFavouriteViewState extends State<CustomerFavouriteView> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (snapshot.data!.data()!.isEmpty) {
+            } else if (snapshot.data!.data()!.keys.toList().isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

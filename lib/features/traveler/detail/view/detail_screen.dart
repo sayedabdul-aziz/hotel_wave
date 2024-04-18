@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:hotel_wave/core/constants/constant.dart';
 import 'package:hotel_wave/core/constants/dummy.dart';
+import 'package:hotel_wave/core/functions/routing.dart';
 import 'package:hotel_wave/core/widgets/custom_button.dart';
 import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
 import 'package:hotel_wave/features/traveler/detail/widgets/detail_info.dart';
 import 'package:hotel_wave/features/traveler/detail/widgets/facility_item.dart';
 import 'package:hotel_wave/features/traveler/detail/widgets/image_container.dart';
+import 'package:hotel_wave/features/traveler/home/view/booking_view.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({
@@ -86,9 +88,18 @@ class DetailScreen extends StatelessWidget {
                 ),
               ),
               const Gap(10),
-              const Padding(
-                padding: EdgeInsets.all(20),
-                child: CustomButton(text: 'Book Now'),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: CustomButton(
+                  text: 'Book Now',
+                  onTap: () {
+                    navigateTo(
+                        context,
+                        BookingView(
+                          hotel: model,
+                        ));
+                  },
+                ),
               ),
             ],
           )),

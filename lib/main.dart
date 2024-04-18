@@ -58,6 +58,10 @@ class _HotelBookingState extends State<HotelBooking> {
                 getbodyStyle(fontSize: 20, color: AppColors.primary),
             centerTitle: true,
           ),
+          datePickerTheme: DatePickerThemeData(
+              backgroundColor: AppColors.darkScaffoldbg,
+              headerBackgroundColor: AppColors.primary,
+              headerForegroundColor: AppColors.white),
           colorScheme: ColorScheme.fromSeed(
             primary: AppColors.primary,
             background: AppColors.darkScaffoldbg,
