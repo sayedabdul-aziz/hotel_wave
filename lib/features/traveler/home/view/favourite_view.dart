@@ -44,7 +44,8 @@ class _CustomerFavouriteViewState extends State<CustomerFavouriteView> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (snapshot.data!.data()!.keys.toList().isEmpty) {
+            } else if (snapshot.data == null ||
+                snapshot.data!.data()!.keys.toList().isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -79,18 +80,11 @@ class _CustomerFavouriteViewState extends State<CustomerFavouriteView> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                              onTap: () {
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //   builder: (context) => CustomerFoodDetailsView(
-                                //       id: item[keyy[index]]['name']),
-                                // ));
-                              },
+                              onTap: () {},
                               child: ResturentItem(
                                 imageUrl: item[keyy[index]]['cover'],
                                 name: item[keyy[index]]['name'],
-                                // price: item[keyy[index]]['rooms'][0]['price']
-                                //     .toString(),
-                                location: item[keyy[index]]['address'],
+                                location: item[keyy[index]]['location'],
                                 rating:
                                     (item[keyy[index]]['rating']).toString(),
                               )),

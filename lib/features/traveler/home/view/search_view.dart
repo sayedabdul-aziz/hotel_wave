@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hotel_wave/core/functions/routing.dart';
 import 'package:hotel_wave/core/utils/app_text_styles.dart';
 import 'package:hotel_wave/core/utils/colors.dart';
-import 'package:hotel_wave/core/widgets/custom_back_action.dart';
-import 'package:hotel_wave/core/widgets/menu_list_item.dart';
+import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
+import 'package:hotel_wave/features/traveler/booking/view/hotel_detail_screen.dart';
+import 'package:hotel_wave/features/traveler/home/widgets/resturent_item.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -19,68 +21,95 @@ class _SearchView extends State<SearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CustomBackAction(),
-        toolbarHeight: 100,
-        title: Row(
-          children: [
-            Expanded(
-                child: TextFormField(
-              onChanged: (value) {
-                setState(() {
-                  keyy = value;
-                });
-              },
-              decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  hintText: 'Search ..',
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.white),
-                      borderRadius: BorderRadius.circular(25)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.white),
-                      borderRadius: BorderRadius.circular(25))),
-            )),
-          ],
+        title: const Text(
+          'Search Hotel',
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('menu-list')
-                .orderBy('name')
-                .startAt([keyy]).endAt(['$keyy\uf8ff']).snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.data!.docs.isEmpty) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.search_off_rounded,
-                        size: 150,
-                        color: AppColors.accentColor,
-                      ),
-                      const Gap(20),
-                      Text(
-                        'No Items',
-                        textAlign: TextAlign.center,
-                        style: getbodyStyle(
-                          fontSize: 16,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    ],
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                    child: TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      keyy = value;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: 'Search ..',
                   ),
-                );
-              } else {
-                return MenuListItems(data: snapshot.data!);
-              }
-            }),
+                )),
+              ],
+            ),
+            const Gap(20),
+            Expanded(
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('hotels')
+                      .orderBy('name')
+                      .startAt([keyy]).endAt(['$keyy\uf8ff']).snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.data!.docs.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.search_off_rounded,
+                              size: 150,
+                              color: AppColors.accentColor,
+                            ),
+                            const Gap(20),
+                            Text(
+                              'No Items',
+                              textAlign: TextAlign.center,
+                              style: getbodyStyle(
+                                fontSize: 16,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, index) {
+                          var item = HotelModel.fromJson(
+                              snapshot.data!.docs[index].data());
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            child: InkWell(
+                              onTap: () {
+                                navigateTo(context, DetailScreen(model: item));
+                              },
+                              child: ResturentItem(
+                                imageUrl: item.cover ?? '',
+                                name: item.name ?? '',
+                                location: item.location ?? '',
+                                rating: item.rating.toString(),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }

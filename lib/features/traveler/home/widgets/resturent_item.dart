@@ -29,23 +29,20 @@ class ResturentItem extends StatelessWidget {
           )),
       child: Row(
         children: [
-          Hero(
-            tag: imageUrl,
-            child: SizedBox(
-              height: 90,
-              width: 150,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Image.asset('assets/logo.png');
-                  },
-                ),
+          SizedBox(
+            height: 90,
+            width: 150,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Image.asset('assets/logo.png');
+                },
               ),
             ),
           ),

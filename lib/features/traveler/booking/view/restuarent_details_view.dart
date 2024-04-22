@@ -32,26 +32,23 @@ class RestuarentDetailView extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: Hero(
-                    tag: model.id ?? 0,
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(30),
-                          bottomLeft: Radius.circular(30),
-                        ),
-                        child: Image.network(
-                          model.cover ?? '',
-                          scale: 4,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Image.asset('assets/logo.png');
-                          },
-                        ),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(30),
+                        bottomLeft: Radius.circular(30),
+                      ),
+                      child: Image.network(
+                        model.cover ?? '',
+                        scale: 4,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Image.asset('assets/logo.png');
+                        },
                       ),
                     ),
                   ),
