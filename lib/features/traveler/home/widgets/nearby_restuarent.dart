@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:hotel_wave/core/functions/routing.dart';
 import 'package:hotel_wave/core/utils/app_text_styles.dart';
+import 'package:hotel_wave/features/models/restaurant_model.dart';
+import 'package:hotel_wave/features/traveler/booking/view/restuarent_details_view.dart';
 import 'package:hotel_wave/features/traveler/home/widgets/resturent_item.dart';
 
 class NearByRestuarent extends StatelessWidget {
-  final List items;
-
   const NearByRestuarent({
     super.key,
-    required this.items,
   });
 
   @override
@@ -37,11 +36,16 @@ class NearByRestuarent extends StatelessWidget {
 
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: ResturentItem(
-                  imageUrl: item['imageUrl'],
-                  name: item['name'],
-                  price: item['price'],
-                  rating: item['rating'],
+                child: InkWell(
+                  onTap: () {
+                    navigateTo(context, RestuarentDetailView(model: item));
+                  },
+                  child: ResturentItem(
+                    imageUrl: item.cover ?? '',
+                    name: item.name ?? '',
+                    location: item.address ?? '',
+                    rating: item.rating.toString(),
+                  ),
                 ),
               );
             },
@@ -51,3 +55,36 @@ class NearByRestuarent extends StatelessWidget {
     );
   }
 }
+
+List<RestuarentModel> items = [
+  RestuarentModel(
+    address: 'cairo',
+    cover:
+        'https://bsmedia.business-standard.com/_media/bs/img/article/2023-09/14/full/1694673859-4182.jpeg?im=FeatureCrop,size=(826,465)',
+    name: 'Hadr Moot',
+    rating: 5,
+    reviews: [],
+    contactNumber: '01260131301',
+    id: '13',
+  ),
+  RestuarentModel(
+    address: 'cairo',
+    cover:
+        'https://bsmedia.business-standard.com/_media/bs/img/article/2023-09/14/full/1694673859-4182.jpeg?im=FeatureCrop,size=(826,465)',
+    name: 'Hadr Moot',
+    rating: 5,
+    reviews: [],
+    contactNumber: '01260131301',
+    id: '14',
+  ),
+  RestuarentModel(
+    address: 'cairo',
+    cover:
+        'https://bsmedia.business-standard.com/_media/bs/img/article/2023-09/14/full/1694673859-4182.jpeg?im=FeatureCrop,size=(826,465)',
+    name: 'Hadr Moot',
+    rating: 5,
+    reviews: [],
+    contactNumber: '01260131301',
+    id: '15',
+  ),
+];

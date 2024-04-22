@@ -6,11 +6,8 @@ import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
 import 'package:hotel_wave/features/traveler/home/widgets/hotel_item.dart';
 
 class TopHotelsList extends StatelessWidget {
-  final List items;
-
   const TopHotelsList({
     super.key,
-    required this.items,
   });
 
   @override

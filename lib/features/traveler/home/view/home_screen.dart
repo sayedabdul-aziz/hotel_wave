@@ -4,8 +4,6 @@ import 'package:hotel_wave/features/traveler/home/widgets/nearby_restuarent.dart
 import 'package:hotel_wave/features/traveler/home/widgets/search_bar.dart';
 import 'package:hotel_wave/features/traveler/home/widgets/top_hotels_list.dart';
 
-import '../../../../core/constants/dummy.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -28,8 +26,8 @@ class HomeScreen extends StatelessWidget {
                 const HomeHeader(),
                 const SearchBarWidget(),
                 // const Chips(),
-                TopHotelsList(items: popular),
-                NearByRestuarent(items: popular),
+                const TopHotelsList(),
+                const NearByRestuarent(),
               ],
             ),
           ),

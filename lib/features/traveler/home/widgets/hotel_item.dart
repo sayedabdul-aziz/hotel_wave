@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotel_wave/core/utils/colors.dart';
 import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
-import 'package:hotel_wave/features/traveler/detail/view/detail_screen.dart';
+import 'package:hotel_wave/features/traveler/booking/view/hotel_detail_screen.dart';
 
 import '../../../../core/constants/constant.dart';
 

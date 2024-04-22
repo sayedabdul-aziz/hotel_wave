@@ -88,8 +88,9 @@ class _CustomerFavouriteViewState extends State<CustomerFavouriteView> {
                               child: ResturentItem(
                                 imageUrl: item[keyy[index]]['cover'],
                                 name: item[keyy[index]]['name'],
-                                price: item[keyy[index]]['rooms'][0]['price']
-                                    .toString(),
+                                // price: item[keyy[index]]['rooms'][0]['price']
+                                //     .toString(),
+                                location: item[keyy[index]]['address'],
                                 rating:
                                     (item[keyy[index]]['rating']).toString(),
                               )),

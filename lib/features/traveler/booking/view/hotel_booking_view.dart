@@ -10,16 +10,16 @@ import 'package:hotel_wave/core/widgets/custom_button.dart';
 import 'package:hotel_wave/core/widgets/custom_error.dart';
 import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
 
-class BookingView extends StatefulWidget {
-  const BookingView({super.key, required this.hotel});
+class HotelBookingView extends StatefulWidget {
+  const HotelBookingView({super.key, required this.hotel});
 
   final HotelModel hotel;
 
   @override
-  _BookingViewState createState() => _BookingViewState();
+  _HotelBookingViewState createState() => _HotelBookingViewState();
 }
 
-class _BookingViewState extends State<BookingView> {
+class _HotelBookingViewState extends State<HotelBookingView> {
   DateTime? _checkInDate;
   DateTime? _checkOutDate;
   int _numberOfGuests = 1;

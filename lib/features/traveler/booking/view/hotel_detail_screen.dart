@@ -6,10 +6,10 @@ import 'package:hotel_wave/core/constants/dummy.dart';
 import 'package:hotel_wave/core/functions/routing.dart';
 import 'package:hotel_wave/core/widgets/custom_button.dart';
 import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
-import 'package:hotel_wave/features/traveler/detail/widgets/detail_info.dart';
-import 'package:hotel_wave/features/traveler/detail/widgets/facility_item.dart';
-import 'package:hotel_wave/features/traveler/detail/widgets/image_container.dart';
-import 'package:hotel_wave/features/traveler/home/view/booking_view.dart';
+import 'package:hotel_wave/features/traveler/booking/view/hotel_booking_view.dart';
+import 'package:hotel_wave/features/traveler/booking/widgets/detail_info.dart';
+import 'package:hotel_wave/features/traveler/booking/widgets/facility_item.dart';
+import 'package:hotel_wave/features/traveler/booking/widgets/image_container.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({
@@ -95,7 +95,7 @@ class DetailScreen extends StatelessWidget {
                   onTap: () {
                     navigateTo(
                         context,
-                        BookingView(
+                        HotelBookingView(
                           hotel: model,
                         ));
                   },

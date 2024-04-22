@@ -9,12 +9,12 @@ class DetailInfo extends StatelessWidget {
   final String title;
   final String reviews;
   final String rating;
-  final String price;
+  final String? price;
 
   const DetailInfo({
     super.key,
     required this.title,
-    required this.price,
+    this.price,
     required this.reviews,
     required this.rating,
   });
@@ -31,26 +31,27 @@ class DetailInfo extends StatelessWidget {
               Row(
                 children: [
                   Expanded(child: Text(title, style: nunito23)),
-                  Row(
-                    children: [
-                      Text(
-                        '$price\$ ',
-                        style: nunito18.copyWith(
-                          fontFamily: 'Roboto',
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w900,
+                  if (price != null)
+                    Row(
+                      children: [
+                        Text(
+                          '$price\$ ',
+                          style: nunito18.copyWith(
+                            fontFamily: 'Roboto',
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '/ per night',
-                        style: nunito10.copyWith(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w500,
-                          color: kAccentColor,
+                        Text(
+                          '/ per night',
+                          style: nunito10.copyWith(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            color: kAccentColor,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                 ],
               ),
               const Gap(10),

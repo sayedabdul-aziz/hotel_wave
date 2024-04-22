@@ -1,4 +1,4 @@
-import 'review.dart';
+import '../review.dart';
 import 'room.dart';
 
 class HotelModel {
@@ -7,7 +7,7 @@ class HotelModel {
   String? location;
   String? cover;
   String? contactNumber;
-  String? email;
+  String? email;  
   String? description;
   List<String>? images;
   double? rating;
