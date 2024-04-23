@@ -16,36 +16,31 @@ class AllHotelsList extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 30),
-        child: Expanded(
-          child: StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection('hotels').snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                var hotels = snapshot.data!.docs;
-                return Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: .8),
-                    itemCount: hotels.length,
-                    itemBuilder: (context, index) {
-                      HotelModel hotel =
-                          HotelModel.fromJson(hotels[index].data());
+        child: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('hotels').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              var hotels = snapshot.data!.docs;
+              return Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: .8),
+                  itemCount: hotels.length,
+                  itemBuilder: (context, index) {
+                    HotelModel hotel =
+                        HotelModel.fromJson(hotels[index].data());
 
-                      return HotelItem(model: hotel);
-                    },
-                  ),
-                );
-              }),
-        ),
+                    return HotelItem(model: hotel);
+                  },
+                ),
+              );
+            }),
       ),
     );
   }

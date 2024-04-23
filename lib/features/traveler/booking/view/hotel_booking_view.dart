@@ -145,7 +145,7 @@ class _HotelBookingViewState extends State<HotelBookingView> {
                   ),
                   const Spacer(),
                   Text(
-                    '${_numberOfGuests.toDouble() * widget.hotel.rooms![1].pricePerNight!}\$',
+                    '${_numberOfGuests.toDouble() * widget.hotel.rooms![0].pricePerNight!}\$',
                     style:
                         getTitleStyle(color: AppColors.primary, fontSize: 20),
                   ),
@@ -172,18 +172,26 @@ class _HotelBookingViewState extends State<HotelBookingView> {
   }
 
   Future<void> _bookRoom() async {
-    FirebaseFirestore.instance.collection('hotel-booking').doc().set({
-      'userId': FirebaseServices.getUser().uid,
-      'hotel': widget.hotel.toJson(),
-      'checkIn': _checkInDate.toString(),
-      'checkOut': _checkOutDate.toString(),
-      'numberOfGuests': _numberOfGuests,
-      'specialRequests': _specialRequests,
-      'status': 0, // 0 = pending, 1 = confirmed, 2 = canceled
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseServices.getUser().uid)
+        .get()
+        .then((value) {
+      FirebaseFirestore.instance.collection('hotel-booking').doc().set({
+        'userId': FirebaseServices.getUser().uid,
+        'bookingDateTime': DateTime.now().toString(),
+        'user': value.data(),
+        'hotel': widget.hotel.toJson(),
+        'checkIn': _checkInDate.toString(),
+        'checkOut': _checkOutDate.toString(),
+        'numberOfGuests': _numberOfGuests,
+        'specialRequests': _specialRequests,
+        'status': 0, // 0 = pending, 1 = confirmed, 2 = canceled
 
-      'totalPrice': _numberOfGuests.toDouble() *
-          widget.hotel.rooms![_numberOfGuests == 1 ? 0 : 1].pricePerNight!,
-      'rating': {}
-    }, SetOptions(merge: true));
+        'totalPrice': _numberOfGuests.toDouble() *
+            widget.hotel.rooms![_numberOfGuests == 1 ? 0 : 1].pricePerNight!,
+        'rating': {}
+      }, SetOptions(merge: true));
+    });
   }
 }

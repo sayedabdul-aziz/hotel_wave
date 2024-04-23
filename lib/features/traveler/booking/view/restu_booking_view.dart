@@ -231,19 +231,27 @@ class _RestuarentBookingViewState extends State<RestuarentBookingView> {
   }
 
   Future<void> _bookRestaurant() async {
-    FirebaseFirestore.instance.collection('restaurant-booking').doc().set({
-      'userId': FirebaseServices.getUser().uid,
-      'restaurant': widget.restuarentModel.toJson(),
-      'checkIn': _checkInDate.toString(),
-      'mealTime': mealIndex == 0
-          ? 'breakfast'
-          : mealIndex == 1
-              ? 'Lunch'
-              : 'Dinner',
-      'numberOfGuests': _numberOfGuests,
-      'specialRequests': _specialRequests,
-      'status': 0, // 0 = pending, 1 = confirmed, 2 = canceled
-      'rating': {}
-    }, SetOptions(merge: true));
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseServices.getUser().uid)
+        .get()
+        .then((value) {
+      FirebaseFirestore.instance.collection('restaurant-booking').doc().set({
+        'userId': FirebaseServices.getUser().uid,
+        'bookingDateTime': DateTime.now().toString(),
+        'user': value.data(),
+        'restaurant': widget.restuarentModel.toJson(),
+        'checkIn': _checkInDate.toString(),
+        'mealTime': mealIndex == 0
+            ? 'breakfast'
+            : mealIndex == 1
+                ? 'Lunch'
+                : 'Dinner',
+        'numberOfGuests': _numberOfGuests,
+        'specialRequests': _specialRequests,
+        'status': 0, // 0 = pending, 1 = confirmed, 2 = canceled
+        'rating': {}
+      }, SetOptions(merge: true));
+    });
   }
 }

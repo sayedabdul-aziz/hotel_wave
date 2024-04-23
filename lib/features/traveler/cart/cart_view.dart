@@ -111,12 +111,7 @@ class _CustomerCartViewState extends State<CustomerCartView> {
                                     return const SizedBox();
                                   }
                                   return GestureDetector(
-                                      onTap: () {
-                                        // Navigator.of(context).push(MaterialPageRoute(
-                                        //   builder: (context) => CustomerFoodDetailsView(
-                                        //       id: item[keyy[index]]['name']),
-                                        // ));
-                                      },
+                                      onTap: () {},
                                       child: Container(
                                         padding: const EdgeInsets.all(15),
                                         decoration: BoxDecoration(
@@ -263,12 +258,7 @@ class _CustomerCartViewState extends State<CustomerCartView> {
                                     return const SizedBox();
                                   }
                                   return GestureDetector(
-                                      onTap: () {
-                                        // Navigator.of(context).push(MaterialPageRoute(
-                                        //   builder: (context) => CustomerFoodDetailsView(
-                                        //       id: item[keyy[index]]['name']),
-                                        // ));
-                                      },
+                                      onTap: () {},
                                       child: Container(
                                         padding: const EdgeInsets.all(15),
                                         decoration: BoxDecoration(
@@ -286,7 +276,7 @@ class _CustomerCartViewState extends State<CustomerCartView> {
                                                   ['cover'],
                                               name: item['restaurant']['name'],
                                               location: item['restaurant']
-                                                  ['address'],
+                                                  ['location'],
                                               rating: (item['restaurant']
                                                       ['rating'])
                                                   .toString(),
