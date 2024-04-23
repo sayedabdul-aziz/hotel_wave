@@ -92,6 +92,7 @@ class _HotelBookingState extends State<HotelBooking> {
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(color: AppColors.redColor),
             ),
+            hintStyle: getsmallStyle(),
             suffixIconColor: AppColors.primary,
             prefixIconColor: AppColors.primary,
           ),

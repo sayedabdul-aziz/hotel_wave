@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hotel_wave/core/constants/constant.dart';
+import 'package:hotel_wave/core/functions/routing.dart';
 import 'package:hotel_wave/core/utils/colors.dart';
 import 'package:hotel_wave/core/widgets/custom_button.dart';
+import 'package:hotel_wave/features/admin/home/add_hotel_view.dart';
+import 'package:hotel_wave/features/admin/home/add_restaurent.dart';
 import 'package:hotel_wave/features/admin/home/widgets/hotels_list.dart';
 import 'package:hotel_wave/features/traveler/home/widgets/nearby_restuarent.dart';
 
@@ -41,7 +44,9 @@ class ManagerHomeView extends StatelessWidget {
                               child: CustomButton(
                                 color: AppColors.primary,
                                 text: 'Add Hotel +',
-                                onTap: () {},
+                                onTap: () {
+                                  navigateTo(context, const AddHotelView());
+                                },
                               ),
                             ),
                             const Gap(15),
@@ -49,7 +54,10 @@ class ManagerHomeView extends StatelessWidget {
                               child: CustomButton(
                                 color: AppColors.shadeColor,
                                 text: 'Add Restuarent +',
-                                onTap: () {},
+                                onTap: () {
+                                  navigateTo(
+                                      context, const AddRestuarentView());
+                                },
                               ),
                             ),
                           ]),

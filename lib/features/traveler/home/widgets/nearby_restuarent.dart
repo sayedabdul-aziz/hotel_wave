@@ -32,9 +32,9 @@ class NearByRestuarent extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 24, right: 24),
-          child: StreamBuilder<Object>(
+          child: StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection('restaurants')
+                  .collection('restaurents')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
@@ -44,9 +44,11 @@ class NearByRestuarent extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
-                  itemCount: items.length,
+                  itemCount: snapshot.data?.docs.length,
                   itemBuilder: (context, index) {
-                    var item = items[index];
+                    var item = RestuarentModel.fromJson(
+                        snapshot.data?.docs[index].data()
+                            as Map<String, dynamic>);
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),

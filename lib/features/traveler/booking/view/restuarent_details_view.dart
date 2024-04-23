@@ -33,7 +33,7 @@ class RestuarentDetailView extends StatelessWidget {
                 text: 'Delete Hotel',
                 onTap: () {
                   FirebaseFirestore.instance
-                      .collection('restaurants')
+                      .collection('restaurents')
                       .doc(model.id)
                       .delete();
                   Navigator.pop(context);
@@ -66,6 +66,7 @@ class RestuarentDetailView extends StatelessWidget {
                     alignment: Alignment.topCenter,
                     child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.5,
+                      width: double.infinity,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           bottomRight: Radius.circular(30),
