@@ -10,6 +10,7 @@ import 'package:hotel_wave/core/widgets/bottom_bar.dart';
 import 'package:hotel_wave/core/widgets/custom_button.dart';
 import 'package:hotel_wave/core/widgets/custom_error.dart';
 import 'package:hotel_wave/core/widgets/custom_loading.dart';
+import 'package:hotel_wave/features/admin/home/nav_bar.dart';
 import 'package:hotel_wave/features/auth/presentation/view/forget_password.dart';
 import 'package:hotel_wave/features/auth/presentation/view/register_view.dart';
 import 'package:hotel_wave/features/auth/presentation/view_model/auth_cubit.dart';
@@ -51,13 +52,13 @@ class _LoginViewState extends State<LoginView> {
               (route) => false,
             );
           } else {
-            // AppLocal.cacheData(AppLocal.role, '1');
-            // Navigator.of(context).pushAndRemoveUntil(
-            //   MaterialPageRoute(
-            //     builder: (context) => const AdminNavBarView(),
-            //   ),
-            //   (route) => false,
-            // );
+            AppLocal.cacheData(AppLocal.role, '1');
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const ManagerNavBarView(),
+              ),
+              (route) => false,
+            );
           }
         } else if (state is AuthFailureState) {
           Navigator.of(context).pop();

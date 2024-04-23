@@ -7,8 +7,8 @@ import 'package:hotel_wave/features/admin/home/all_hotels_view.dart';
 import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
 import 'package:hotel_wave/features/traveler/home/widgets/hotel_item.dart';
 
-class TopHotelsList extends StatelessWidget {
-  const TopHotelsList({
+class HotelsList extends StatelessWidget {
+  const HotelsList({
     super.key,
   });
 
@@ -22,7 +22,7 @@ class TopHotelsList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('Top Hotels', style: getTitleStyle()),
+              Text('All Hotels', style: getTitleStyle()),
               InkWell(
                 onTap: () {
                   navigateTo(context, const AllHotelsList());
@@ -39,10 +39,7 @@ class TopHotelsList extends StatelessWidget {
           ),
         ),
         StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('hotels')
-                .orderBy('rating', descending: true)
-                .snapshots(),
+            stream: FirebaseFirestore.instance.collection('hotels').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

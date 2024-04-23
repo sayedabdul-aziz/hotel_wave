@@ -11,6 +11,7 @@ import 'package:hotel_wave/core/widgets/bottom_bar.dart';
 import 'package:hotel_wave/core/widgets/custom_button.dart';
 import 'package:hotel_wave/core/widgets/custom_error.dart';
 import 'package:hotel_wave/core/widgets/custom_loading.dart';
+import 'package:hotel_wave/features/admin/home/nav_bar.dart';
 import 'package:hotel_wave/features/auth/presentation/view/signin_view.dart';
 import 'package:hotel_wave/features/auth/presentation/view_model/auth_cubit.dart';
 import 'package:hotel_wave/features/auth/presentation/view_model/auth_states.dart';
@@ -45,7 +46,6 @@ class _RegisterViewState extends State<RegisterView> {
       listener: (context, state) {
         if (state is AuthSuccessState) {
           if (state.role == '0') {
-            AppLocal.cacheData(AppLocal.role, '0');
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (context) => const NavBarWidget(),
@@ -53,13 +53,12 @@ class _RegisterViewState extends State<RegisterView> {
               (route) => false,
             );
           } else {
-            // AppLocal.cacheData(AppLocal.role, '2');
-            // Navigator.of(context).pushAndRemoveUntil(
-            //   MaterialPageRoute(
-            //     builder: (context) => const AdminNavBarView(),
-            //   ),
-            //   (route) => false,
-            // );
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const ManagerNavBarView(),
+              ),
+              (route) => false,
+            );
           }
         } else if (state is AuthFailureState) {
           Navigator.of(context).pop();

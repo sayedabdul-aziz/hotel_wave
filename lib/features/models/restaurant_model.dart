@@ -5,7 +5,7 @@ class RestuarentModel {
   String? name;
   String? description;
   String? cover;
-  String? address;
+  String? location;
   double? rating;
   List<Review>? reviews;
   String? contactNumber;
@@ -15,7 +15,7 @@ class RestuarentModel {
     this.name,
     this.cover,
     this.description,
-    this.address,
+    this.location,
     this.rating,
     this.reviews,
     this.contactNumber,
@@ -27,7 +27,7 @@ class RestuarentModel {
         name: json['name'],
         description: json['description'],
         cover: json['cover'],
-        address: json['address'],
+        location: json['location'],
         rating: json['rating'],
         contactNumber: json['contactNumber'],
         reviews: (json['reviews'] as List<dynamic>?)
@@ -40,7 +40,7 @@ class RestuarentModel {
         'name': name,
         'description': description,
         'cover': cover,
-        'address': address,
+        'location': location,
         'rating': rating,
         'contactNumber': contactNumber,
         'reviews': reviews?.map((e) => e.toJson()).toList(),

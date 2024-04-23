@@ -7,6 +7,7 @@ import 'package:hotel_wave/core/services/firebase_services.dart';
 import 'package:hotel_wave/core/utils/app_text_styles.dart';
 import 'package:hotel_wave/core/utils/colors.dart';
 import 'package:hotel_wave/core/widgets/bottom_bar.dart';
+import 'package:hotel_wave/features/admin/home/nav_bar.dart';
 import 'package:hotel_wave/features/auth/presentation/view/signin_view.dart';
 import 'package:hotel_wave/features/auth/presentation/view_model/auth_cubit.dart';
 
@@ -35,9 +36,11 @@ class HotelBooking extends StatefulWidget {
 
 class _HotelBookingState extends State<HotelBooking> {
   User? user;
+  String? role;
   @override
   void initState() {
     user = FirebaseAuth.instance.currentUser;
+    role = user?.photoURL;
     super.initState();
   }
 
@@ -100,7 +103,11 @@ class _HotelBookingState extends State<HotelBooking> {
           progressIndicatorTheme:
               ProgressIndicatorThemeData(color: AppColors.primary),
         ),
-        home: (user == null) ? const LoginView() : const NavBarWidget(),
+        home: (user == null)
+            ? const LoginView()
+            : (role == '0')
+                ? const NavBarWidget()
+                : const ManagerNavBarView(),
       ),
     );
   }

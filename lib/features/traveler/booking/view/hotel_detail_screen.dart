@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:hotel_wave/core/constants/constant.dart';
 import 'package:hotel_wave/core/constants/dummy.dart';
 import 'package:hotel_wave/core/functions/routing.dart';
+import 'package:hotel_wave/core/utils/colors.dart';
 import 'package:hotel_wave/core/widgets/custom_button.dart';
 import 'package:hotel_wave/features/models/hotel_model/hotel_model.dart';
 import 'package:hotel_wave/features/traveler/booking/view/hotel_booking_view.dart';
@@ -24,6 +27,34 @@ class DetailScreen extends StatelessWidget {
       statusBarColor: Colors.transparent,
     ));
     return Scaffold(
+      bottomNavigationBar: (FirebaseAuth.instance.currentUser?.photoURL != '0')
+          ? Padding(
+              padding: const EdgeInsets.all(20),
+              child: CustomButton(
+                color: AppColors.redColor,
+                text: 'Delete Hotel',
+                onTap: () {
+                  FirebaseFirestore.instance
+                      .collection('hotels')
+                      .doc(model.id)
+                      .delete();
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(20),
+              child: CustomButton(
+                text: 'Book Now',
+                onTap: () {
+                  navigateTo(
+                      context,
+                      HotelBookingView(
+                        hotel: model,
+                      ));
+                },
+              ),
+            ),
       body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -88,19 +119,6 @@ class DetailScreen extends StatelessWidget {
                 ),
               ),
               const Gap(10),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: CustomButton(
-                  text: 'Book Now',
-                  onTap: () {
-                    navigateTo(
-                        context,
-                        HotelBookingView(
-                          hotel: model,
-                        ));
-                  },
-                ),
-              ),
             ],
           )),
     );

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hotel_wave/core/functions/routing.dart';
 import 'package:hotel_wave/core/utils/app_text_styles.dart';
@@ -20,36 +22,50 @@ class NearByRestuarent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('Nearby Restuarent', style: getTitleStyle()),
+              Text(
+                  FirebaseAuth.instance.currentUser?.photoURL == '0'
+                      ? 'Nearby Restuarent'
+                      : 'All Restuarent',
+                  style: getTitleStyle()),
             ],
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 24, right: 24),
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              var item = items[index];
+          child: StreamBuilder<Object>(
+              stream: FirebaseFirestore.instance
+                  .collection('restaurants')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    var item = items[index];
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: InkWell(
-                  onTap: () {
-                    navigateTo(context, RestuarentDetailView(model: item));
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: InkWell(
+                        onTap: () {
+                          navigateTo(
+                              context, RestuarentDetailView(model: item));
+                        },
+                        child: ResturentItem(
+                          imageUrl: item.cover ?? '',
+                          name: item.name ?? '',
+                          location: item.location ?? '',
+                          rating: item.rating.toString(),
+                        ),
+                      ),
+                    );
                   },
-                  child: ResturentItem(
-                    imageUrl: item.cover ?? '',
-                    name: item.name ?? '',
-                    location: item.address ?? '',
-                    rating: item.rating.toString(),
-                  ),
-                ),
-              );
-            },
-          ),
+                );
+              }),
         ),
       ],
     );
@@ -58,33 +74,14 @@ class NearByRestuarent extends StatelessWidget {
 
 List<RestuarentModel> items = [
   RestuarentModel(
-    address: 'cairo',
+    location: 'Nasr City, cairo',
     cover:
         'https://bsmedia.business-standard.com/_media/bs/img/article/2023-09/14/full/1694673859-4182.jpeg?im=FeatureCrop,size=(826,465)',
-    name: 'Hadr Moot',
+    name: 'Cherry Food',
     rating: 5,
     reviews: [],
     contactNumber: '01260131301',
+    description: '',
     id: '13',
-  ),
-  RestuarentModel(
-    address: 'cairo',
-    cover:
-        'https://bsmedia.business-standard.com/_media/bs/img/article/2023-09/14/full/1694673859-4182.jpeg?im=FeatureCrop,size=(826,465)',
-    name: 'Hadr Moot',
-    rating: 5,
-    reviews: [],
-    contactNumber: '01260131301',
-    id: '14',
-  ),
-  RestuarentModel(
-    address: 'cairo',
-    cover:
-        'https://bsmedia.business-standard.com/_media/bs/img/article/2023-09/14/full/1694673859-4182.jpeg?im=FeatureCrop,size=(826,465)',
-    name: 'Hadr Moot',
-    rating: 5,
-    reviews: [],
-    contactNumber: '01260131301',
-    id: '15',
   ),
 ];

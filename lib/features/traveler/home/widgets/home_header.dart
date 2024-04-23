@@ -9,22 +9,6 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Padding(
-        //     padding: const EdgeInsets.only(
-        //       top: 30,
-        //       left: 24,
-        //       right: 24,
-        //     ),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         SvgPicture.asset('assets/icons/menu.svg'),
-        //         Image.asset('assets/images/profile.png', scale: 4),
-        //       ],
-        //     ),
-        //   ),
-        // const SizedBox(height: 11),
-        // header text
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
