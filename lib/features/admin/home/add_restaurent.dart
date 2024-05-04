@@ -195,7 +195,6 @@ class _AddRestuarentViewScreenState extends State<AddRestuarentView> {
                   return null;
                 },
                 decoration: const InputDecoration(hintText: 'Email'),
-                keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 16.0),
             ],

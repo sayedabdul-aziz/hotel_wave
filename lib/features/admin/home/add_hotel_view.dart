@@ -274,7 +274,6 @@ class _AddHotelViewScreenState extends State<AddHotelView> {
                   return null;
                 },
                 decoration: const InputDecoration(hintText: 'Email'),
-                keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 16.0),
               Row(

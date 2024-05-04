@@ -112,7 +112,7 @@ class HotelItem extends StatelessWidget {
                             SvgPicture.asset('assets/icons/star.svg'),
                             const SizedBox(width: 4),
                             Text(
-                              '${model.rating} (${model.reviews?.length})',
+                              '${model.rating!.toStringAsFixed(1)} (${model.reviews?.length})',
                               style: nunito10.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

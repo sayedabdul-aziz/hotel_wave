@@ -99,7 +99,7 @@ class _SearchView extends State<SearchView> {
                                 imageUrl: item.cover ?? '',
                                 name: item.name ?? '',
                                 location: item.location ?? '',
-                                rating: item.rating.toString(),
+                                rating: item.rating!.toStringAsFixed(1),
                               ),
                             ),
                           );

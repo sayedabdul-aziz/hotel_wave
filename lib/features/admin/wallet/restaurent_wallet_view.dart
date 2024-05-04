@@ -84,7 +84,7 @@ class RestaurentWalletViewState extends State<RestaurentWalletView> {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (snapshot.data?.docs.isEmpty == true) {
+                      } else if (snapshot.data?.docs.isEmpty ?? true) {
                         return Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +129,7 @@ class RestaurentWalletViewState extends State<RestaurentWalletView> {
                                     ResturentItem(
                                       imageUrl: item['restaurant']['cover'],
                                       name: item['restaurant']['name'],
-                                      location: item['restaurant']['address'],
+                                      location: item['restaurant']['location'],
                                       rating: (item['restaurant']['rating'])
                                           .toString(),
                                     ),

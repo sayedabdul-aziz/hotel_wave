@@ -130,7 +130,7 @@ class _CustomerCartViewState extends State<CustomerCartView> {
                                               location: item['hotel']
                                                   ['location'],
                                               rating: (item['hotel']['rating'])
-                                                  .toString(),
+                                                  .toStringAsFixed(1),
                                             ),
                                             const Gap(10),
                                             Row(
